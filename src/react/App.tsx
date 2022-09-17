@@ -1,10 +1,9 @@
-import "./App.css";
 import {
   Answer,
   createAnswer,
   createQuestion,
   Question,
-} from "./core/questions";
+} from "@/core/questions";
 
 const questionRoute = createQuestion("Quelle fillière ?", [
   createAnswer("PCSI"),

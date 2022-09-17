@@ -1,4 +1,4 @@
-import { createAnswer, createQuestion } from "../src/core/questions";
+import { createAnswer, createQuestion } from "../../src/core/questions";
 
 describe("Test question creation", function () {
   test("test a question can have many answers", function () {
