@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./App.css";
 import {
   Answer,
@@ -7,20 +6,19 @@ import {
   Question,
 } from "./core/questions";
 
+const questionRoute = createQuestion("Quelle fillière ?", [
+  createAnswer("PCSI"),
+  createAnswer("MPSI"),
+  createAnswer("PC"),
+  createAnswer("PSI"),
+]);
+
 const tree = createQuestion("Vous êtes ?", [
-  createAnswer(
-    "En CPGE",
-    createQuestion("Quelle est votre fillière ?", [
-      createAnswer("PCSI"),
-      createAnswer("MPSI"),
-      createAnswer("PC"),
-      createAnswer("PSI"),
-    ])
-  ),
+  createAnswer("En CPGE", questionRoute),
   createAnswer(
     "Lycéen",
     createQuestion("Envisagez-vous de faire une prépa ?", [
-      createAnswer("Oui"),
+      createAnswer("Oui", questionRoute),
       createAnswer("Non"),
     ])
   ),

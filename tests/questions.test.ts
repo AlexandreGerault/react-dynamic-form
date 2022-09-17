@@ -17,15 +17,30 @@ describe("Test question creation", function () {
   });
 });
 
-test("an answer can have a next question", function () {
-  const question = createQuestion("Est-ce correct ?", [
-    createAnswer("Oui"),
-    createAnswer("Non"),
-  ]);
+describe("Test answer creation", function () {
+  test("an answer can have a next question", function () {
+    const question = createQuestion("Est-ce correct ?", [
+      createAnswer("Oui"),
+      createAnswer("Non"),
+    ]);
 
-  const answer = createAnswer("Je suis lycéen", { ...question });
+    const answer = createAnswer("Je suis lycéen", question);
 
-  expect(answer.nextQuestion).toEqual(question);
+    expect(answer.nextQuestion).toBe(question);
+  });
+
+  test("two asnwers can lead to the same next question", function () {
+    const question = createQuestion("Est-ce correct ?", [
+      createAnswer("Oui"),
+      createAnswer("Non"),
+    ]);
+
+    const answerA = createAnswer("Je suis lycéen", question);
+    const answerB = createAnswer("Je suis en CPGE", question);
+
+    expect(answerA.nextQuestion).toBe(question);
+    expect(answerB.nextQuestion).toBe(question);
+  });
 });
 
 export {};
