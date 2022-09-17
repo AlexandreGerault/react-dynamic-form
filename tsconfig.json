@@ -17,12 +17,12 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
-      "@/core/*": ["src/core/*"],
-      "@/react/*": ["src/react/*"],
-      "@/tests/core": ["tests/core"],
-      "@/tests/react": ["tests/react"],
+      "@/core/*": ["./src/core/*"],
+      "@/react/*": ["./src/react/*"],
+      "@/tests/core/*": ["./tests/core/*"],
+      "@/tests/react/*": ["./tests/react/*"],
     }
   },
-  "include": ["src"],
+  "include": ["src", "tests"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
