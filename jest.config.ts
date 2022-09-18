@@ -5,6 +5,7 @@ export default {
     "^@/react/(.*)$": "<rootDir>/src/react/$1",
     "^@/tests/core/(.*)$": "<rootDir>/tests/core/$1",
     "^@/tests/react/(.*)$": "<rootDir>/tests/react/$1",
+    "^@/tests/fixtures/(.*)$": "<rootDir>/tests/fixtures/$1",
   },
   transform: {
     "^.+\\.tsx?$": "ts-jest",

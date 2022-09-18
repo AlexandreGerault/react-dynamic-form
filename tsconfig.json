@@ -21,6 +21,7 @@
       "@/react/*": ["./src/react/*"],
       "@/tests/core/*": ["./tests/core/*"],
       "@/tests/react/*": ["./tests/react/*"],
+      "@/tests/fixtures/*": ["./tests/fixtures/*"],
     }
   },
   "include": ["src", "tests"],
