@@ -1,93 +1,58 @@
-import { useCallback, useState } from 'react';
+import { Question } from '@/core/questions';
 
-import { Answer, Question } from '@/core/questions';
+import useStepForm from './hooks/step-form';
 
 interface DynamicFormProps {
   questionsTree: Question;
   onSubmit: (values: Record<string, string>) => void;
 }
 
-interface Step {
-  question: Question;
-  answer: Answer;
-}
-
-type History = Step[];
-
 export function DynamicForm({ questionsTree, onSubmit }: DynamicFormProps) {
-  const [currentQuestion, setCurrentQuestion] = useState(questionsTree);
-  const [answer, setAnswer] = useState<Answer>();
-  const [history, setHistory] = useState<History>([]);
-
-  const handleAnswer = useCallback(
-    (answer: Answer) => {
-      setAnswer(answer);
-    },
-    [currentQuestion],
-  );
-
-  const handleSubmit = useCallback(() => {
-    if (!answer) {
-      throw new Error('No answer');
-    }
-
-    if (answer.options?.nextQuestion) {
-      setHistory((prev) => [...prev, { question: currentQuestion, answer }]);
-      setCurrentQuestion(answer.options.nextQuestion);
-      return;
-    }
-
-    const payload = history.reduce<Record<string, string>>(
-      (acc, step) => {
-        return {
-          ...acc,
-          [step.question.options?.key || step.question.label]:
-            step.answer.options?.value || step.answer.label,
-        };
-      },
-      {
-        [currentQuestion.options?.key || currentQuestion.label]:
-          answer.options?.value || answer.label,
-      },
-    );
-
-    onSubmit(payload);
-  }, [answer]);
-
-  const handleBack = useCallback(() => {
-    const previousStep = history[history.length - 1];
-    setHistory((prev) => prev.slice(0, prev.length - 1));
-    setCurrentQuestion(previousStep.question);
-  }, [history]);
-
-  const isFirstQuestion = useCallback(() => history.length === 0, [history]);
+  const {
+    submit,
+    back,
+    selectAnswer,
+    currentQuestion,
+    shouldDisableBackButton,
+    selectedAnswer,
+  } = useStepForm(questionsTree, onSubmit);
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        handleSubmit();
-      }}>
-      <p>{currentQuestion.label}</p>
-      <div>
+        submit();
+      }}
+      className="max-w-xs bg-white rounded shadow px-6 py-4 w-full space-y-4">
+      <p className="text-2xl">{currentQuestion.label}</p>
+      <div className="space-y-2">
         {currentQuestion.answers.map((answer) => (
-          <div key={answer.label}>
-            <label htmlFor={answer.label}>{answer.label}</label>
-
+          <div key={answer.label} className="flex gap-2 items-center">
             <input
               type="radio"
               name="answer"
               value={answer.label}
               id={answer.label}
-              onClick={() => handleAnswer(answer)}
+              onClick={() => selectAnswer(answer)}
+              checked={answer.label === selectedAnswer?.label}
             />
+
+            <label htmlFor={answer.label}>{answer.label}</label>
           </div>
         ))}
       </div>
-      <button type="button" onClick={handleBack} disabled={isFirstQuestion()}>
-        Retour
-      </button>
-      <button type="submit">Valider</button>
+      <div className="flex justify-between">
+        <button
+          type="button"
+          onClick={back}
+          disabled={shouldDisableBackButton}
+          className="rounded outline-purple-500 text-purple-500 px-3 py-2">
+          Retour
+        </button>
+        <button type="submit" className="rounded bg-purple-500 text-white px-3 py-2">
+          Valider
+        </button>
+      </div>
     </form>
   );
 }

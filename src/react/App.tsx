@@ -1,3 +1,5 @@
+import './index.css';
+
 import { createAnswer, createQuestion } from '@/core/questions';
 
 import { DynamicForm } from './DynamicForm';
@@ -19,10 +21,11 @@ const tree = createQuestion(
     createAnswer('En CPGE', { nextQuestion: questionRoute, value: 'cpge' }),
     createAnswer('Lycéen', {
       value: 'highschool',
-      nextQuestion: createQuestion('Envisagez-vous de faire une prépa ?', [
-        createAnswer('Oui', { value: 'yes' }),
-        createAnswer('Non', { value: 'no' }),
-      ]),
+      nextQuestion: createQuestion(
+        'Envisagez-vous de faire une prépa ?',
+        [createAnswer('Oui', { value: 'yes' }), createAnswer('Non', { value: 'no' })],
+        { key: 'do-prepa' },
+      ),
     }),
   ],
   { key: 'level' },
@@ -30,7 +33,7 @@ const tree = createQuestion(
 
 function App() {
   return (
-    <div className="App">
+    <div className="flex items-center justify-center mx-auto min-h-screen bg-blue-200">
       <DynamicForm
         questionsTree={tree}
         onSubmit={(values) => {
