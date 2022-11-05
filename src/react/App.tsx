@@ -1,4 +1,4 @@
-import { Answer, createAnswer, createQuestion } from "@/core/questions";
+import { createAnswer, createQuestion } from "@/core/questions";
 import { DynamicForm } from "./DynamicForm";
 
 const questionRoute = createQuestion("Quelle fillière ?", [

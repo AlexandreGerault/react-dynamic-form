@@ -77,7 +77,7 @@ describe("Dynamic Form Component test suite", function () {
 
     expect(values).toEqual({
       "Question 1 : Vous êtes": "Un homme",
-      "Question 2 : Quel est votre âge ?": "Entre 18 et 25 ans",
+      "Quel est votre âge ?": "Entre 18 et 25 ans",
     });
   });
 });

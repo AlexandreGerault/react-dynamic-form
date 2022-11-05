@@ -6,10 +6,17 @@ interface DynamicFormProps {
   onSubmit: (values: Record<string, string>) => void;
 }
 
+interface Step {
+  question: Question;
+  answers: string;
+}
+
+type History = Step[];
+
 export function DynamicForm({ questionsTree, onSubmit }: DynamicFormProps) {
   const [currentQuestion, setCurrentQuestion] = useState(questionsTree);
   const [answer, setAnswer] = useState<any>(null);
-  const [history, setHistory] = useState<Question[]>([]);
+  const [history, setHistory] = useState<History>([]);
 
   const handleAnswer = useCallback(
     (answer: any) => {
@@ -20,21 +27,18 @@ export function DynamicForm({ questionsTree, onSubmit }: DynamicFormProps) {
 
   const handleSubmit = useCallback(() => {
     if (answer.nextQuestion) {
-      setHistory((prev) => [...prev, currentQuestion])
+      setHistory((prev) => [...prev, { question: currentQuestion, answers: answer.label }]);
       setCurrentQuestion(answer.nextQuestion);
       return;
     }
     
-    onSubmit({
-      "Question 1 : Vous êtes": "Un homme",
-      "Question 2 : Quel est votre âge ?": "Entre 18 et 25 ans",
-    });
+    onSubmit(history.reduce((acc, step) => ({ ...acc, [step.question.label]: step.answers }), { [currentQuestion.label]: answer.label }));
   }, [answer]);
 
   const handleBack = useCallback(() => {
-    const previousQuestion = history[history.length - 1];
+    const previousStep = history[history.length - 1];
     setHistory((prev) => prev.slice(0, prev.length - 1));
-    setCurrentQuestion(previousQuestion);
+    setCurrentQuestion(previousStep.question);
   }, [history]);
 
   const isFirstQuestion = useCallback(() => history.length === 0, [history]);
