@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { Question } from '@/core/questions';
+import { Answer, Question } from '@/core/questions';
 
 interface DynamicFormProps {
   questionsTree: Question;
@@ -9,38 +9,49 @@ interface DynamicFormProps {
 
 interface Step {
   question: Question;
-  answers: string;
+  answer: Answer;
 }
 
 type History = Step[];
 
 export function DynamicForm({ questionsTree, onSubmit }: DynamicFormProps) {
   const [currentQuestion, setCurrentQuestion] = useState(questionsTree);
-  const [answer, setAnswer] = useState<any>(null);
+  const [answer, setAnswer] = useState<Answer>();
   const [history, setHistory] = useState<History>([]);
 
   const handleAnswer = useCallback(
-    (answer: any) => {
+    (answer: Answer) => {
       setAnswer(answer);
     },
     [currentQuestion],
   );
 
   const handleSubmit = useCallback(() => {
-    if (answer.nextQuestion) {
-      setHistory((prev) => [
-        ...prev,
-        { question: currentQuestion, answers: answer.label },
-      ]);
-      setCurrentQuestion(answer.nextQuestion);
+    if (!answer) {
+      throw new Error('No answer');
+    }
+
+    if (answer.options?.nextQuestion) {
+      setHistory((prev) => [...prev, { question: currentQuestion, answer }]);
+      setCurrentQuestion(answer.options.nextQuestion);
       return;
     }
 
-    onSubmit(
-      history.reduce((acc, step) => ({ ...acc, [step.question.label]: step.answers }), {
-        [currentQuestion.label]: answer.label,
-      }),
+    const payload = history.reduce<Record<string, string>>(
+      (acc, step) => {
+        return {
+          ...acc,
+          [step.question.options?.key || step.question.label]:
+            step.answer.options?.value || step.answer.label,
+        };
+      },
+      {
+        [currentQuestion.options?.key || currentQuestion.label]:
+          answer.options?.value || answer.label,
+      },
     );
+
+    onSubmit(payload);
   }, [answer]);
 
   const handleBack = useCallback(() => {

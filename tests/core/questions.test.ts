@@ -26,9 +26,9 @@ describe('Test answer creation', function () {
       createAnswer('Non'),
     ]);
 
-    const answer = createAnswer('Je suis lycéen', question);
+    const answer = createAnswer('Je suis lycéen', { nextQuestion: question });
 
-    expect(answer.nextQuestion).toBe(question);
+    expect(answer.options?.nextQuestion).toBe(question);
   });
 
   test('two asnwers can lead to the same next question', function () {
@@ -37,11 +37,11 @@ describe('Test answer creation', function () {
       createAnswer('Non'),
     ]);
 
-    const answerA = createAnswer('Je suis lycéen', question);
-    const answerB = createAnswer('Je suis en CPGE', question);
+    const answerA = createAnswer('Je suis lycéen', { nextQuestion: question });
+    const answerB = createAnswer('Je suis en CPGE', { nextQuestion: question });
 
-    expect(answerA.nextQuestion).toBe(question);
-    expect(answerB.nextQuestion).toBe(question);
+    expect(answerA.options?.nextQuestion).toBe(question);
+    expect(answerB.options?.nextQuestion).toBe(question);
   });
 });
 
