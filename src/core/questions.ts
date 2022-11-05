@@ -9,8 +9,7 @@ export interface Answer {
 }
 
 export function createQuestion(label: string, answers: Answer[]): Question {
-  if (answers.length < 2)
-    throw Error("A question must have at least 2 answers");
+  if (answers.length < 2) throw Error('A question must have at least 2 answers');
 
   return {
     label,

@@ -1,5 +1,6 @@
-import { Question } from "@/core/questions";
-import { useCallback, useState } from "react";
+import { useCallback, useState } from 'react';
+
+import { Question } from '@/core/questions';
 
 interface DynamicFormProps {
   questionsTree: Question;
@@ -22,17 +23,24 @@ export function DynamicForm({ questionsTree, onSubmit }: DynamicFormProps) {
     (answer: any) => {
       setAnswer(answer);
     },
-    [currentQuestion]
+    [currentQuestion],
   );
 
   const handleSubmit = useCallback(() => {
     if (answer.nextQuestion) {
-      setHistory((prev) => [...prev, { question: currentQuestion, answers: answer.label }]);
+      setHistory((prev) => [
+        ...prev,
+        { question: currentQuestion, answers: answer.label },
+      ]);
       setCurrentQuestion(answer.nextQuestion);
       return;
     }
-    
-    onSubmit(history.reduce((acc, step) => ({ ...acc, [step.question.label]: step.answers }), { [currentQuestion.label]: answer.label }));
+
+    onSubmit(
+      history.reduce((acc, step) => ({ ...acc, [step.question.label]: step.answers }), {
+        [currentQuestion.label]: answer.label,
+      }),
+    );
   }, [answer]);
 
   const handleBack = useCallback(() => {
@@ -48,8 +56,7 @@ export function DynamicForm({ questionsTree, onSubmit }: DynamicFormProps) {
       onSubmit={(e) => {
         e.preventDefault();
         handleSubmit();
-      }}
-    >
+      }}>
       <p>{currentQuestion.label}</p>
       <div>
         {currentQuestion.answers.map((answer) => (
@@ -66,7 +73,7 @@ export function DynamicForm({ questionsTree, onSubmit }: DynamicFormProps) {
           </div>
         ))}
       </div>
-      <button type="button" role="button[back]" name="back" onClick={handleBack} disabled={isFirstQuestion()}>
+      <button type="button" onClick={handleBack} disabled={isFirstQuestion()}>
         Retour
       </button>
       <button type="submit">Valider</button>
