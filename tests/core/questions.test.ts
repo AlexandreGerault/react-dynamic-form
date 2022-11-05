@@ -1,4 +1,5 @@
 import { createAnswer, createQuestion } from "@/core/questions";
+import { test, describe, expect } from 'vitest';
 
 describe("Test question creation", function () {
   test("test a question can have many answers", function () {

@@ -22,16 +22,12 @@ const tree = createQuestion("Vous êtes ?", [
 function App() {
   return (
     <div className="App">
-      <ul>
-        <li>
-          <DynamicForm
-            questionsTree={tree}
-            onSubmit={() => {
-              alert("Submit form");
-            }}
-          />
-        </li>
-      </ul>
+      <DynamicForm
+        questionsTree={tree}
+        onSubmit={(values) => {
+          alert("Submit form " + JSON.stringify(values));
+        }}
+      />
     </div>
   );
 }
