@@ -5,10 +5,10 @@ import { DynamicForm } from './DynamicForm';
 const questionRoute = createQuestion(
   'Quelle fillière ?',
   [
-    createAnswer('PCSI', undefined, { value: 'pcsi' }),
-    createAnswer('MPSI', undefined, { value: 'mpsi' }),
-    createAnswer('PC', undefined, { value: 'pc' }),
-    createAnswer('PSI', undefined, { value: 'psi' }),
+    createAnswer('PCSI', { value: 'pcsi' }),
+    createAnswer('MPSI', { value: 'mpsi' }),
+    createAnswer('PC', { value: 'pc' }),
+    createAnswer('PSI', { value: 'psi' }),
   ],
   { key: 'route' },
 );
@@ -16,15 +16,14 @@ const questionRoute = createQuestion(
 const tree = createQuestion(
   'Vous êtes ?',
   [
-    createAnswer('En CPGE', questionRoute, { value: 'cpge' }),
-    createAnswer(
-      'Lycéen',
-      createQuestion('Envisagez-vous de faire une prépa ?', [
-        createAnswer('Oui', undefined, { value: 'yes' }),
-        createAnswer('Non', undefined, { value: 'no' }),
+    createAnswer('En CPGE', { nextQuestion: questionRoute, value: 'cpge' }),
+    createAnswer('Lycéen', {
+      value: 'highschool',
+      nextQuestion: createQuestion('Envisagez-vous de faire une prépa ?', [
+        createAnswer('Oui', { value: 'yes' }),
+        createAnswer('Non', { value: 'no' }),
       ]),
-      { value: 'highschool' },
-    ),
+    }),
   ],
   { key: 'level' },
 );
