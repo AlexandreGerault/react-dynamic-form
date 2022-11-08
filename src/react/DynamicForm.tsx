@@ -33,7 +33,7 @@ export function DynamicForm({ questionsTree, onSubmit }: DynamicFormProps) {
               name="answer"
               value={answer.label}
               id={answer.label}
-              onClick={() => selectAnswer(answer)}
+              onChange={() => selectAnswer(answer)}
               checked={answer.label === selectedAnswer?.label}
             />
 
