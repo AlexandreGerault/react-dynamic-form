@@ -40,7 +40,15 @@
     "vite-tsconfig-paths": "^3.5.0",
     "vitest": "^0.24.4"
   },
-  "main": "src/main.tsx",
+  "main": "./dist/react-dynamic-form.umd.cjs",
+  "module": "./dist/react-dynamic-form.js",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "import": "./dist/react-dynamic-form.js",
+      "require": "./dist/react-dynamic-form.umd.cjs"
+    }
+  },
   "repository": "git@github.com:AlexandreGerault/react-dynamic-form.git",
   "author": "Alexandre Gérault <gerault-alexandre@orange.fr>",
   "license": "MIT"
