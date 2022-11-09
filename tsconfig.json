@@ -9,6 +9,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "declaration": true,
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
@@ -21,7 +22,7 @@
       "@/react/*": ["./src/react/*"],
       "@/tests/core/*": ["./tests/core/*"],
       "@/tests/react/*": ["./tests/react/*"],
-      "@/tests/fixtures/*": ["./tests/fixtures/*"],
+      "@/tests/fixtures/*": ["./tests/fixtures/*"]
     }
   },
   "include": ["src", "tests"],

@@ -1,3 +1,4 @@
+import typescript from '@rollup/plugin-typescript';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
@@ -17,6 +18,15 @@ export default defineConfig({
       // make sure to externalize deps that shouldn't be bundled
       // into your library
       external: ['react', 'react-dom'],
+      plugins: [
+        typescript({
+          target: 'esnext',
+          declaration: true,
+          declarationDir: 'dist',
+          exclude: ['node_modules/**', 'tests/**'],
+          allowSyntheticDefaultImports: true,
+        }),
+      ],
     },
   },
   plugins: [react(), tsconfigPaths()],
