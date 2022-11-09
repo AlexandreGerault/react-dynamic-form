@@ -9,8 +9,6 @@ A react library to build dynamic step forms. Create an object describing your fo
 
 ## Documentation
 
-[Documentation](docs/)
-
 ### Simple example
 
 To create a dynamic step by step form, you have to:
