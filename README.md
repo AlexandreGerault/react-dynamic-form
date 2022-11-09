@@ -94,7 +94,89 @@ const tree = {
 };
 ```
 
-As you can read above, the factory functions allow you to avoid repeat yourself when repeating the same question.
+As you can read above, the factory functions allow you to avoid repeating yourself when repeating the same question.
+
+Then you can create a component that will create a form with the given questions, using the `useStepForm` hook. You can look at the `DynamicForm` component as an example:
+
+```tsx
+import { Question } from '@/core/questions';
+
+import useStepForm from './hooks/step-form';
+
+interface DynamicFormProps {
+  questionsTree: Question;
+  onSubmit: (values: Record<string, string>) => void;
+}
+
+export function DynamicForm({ questionsTree, onSubmit }: DynamicFormProps) {
+  const {
+    submit,
+    back,
+    selectAnswer,
+    currentQuestion,
+    shouldDisableBackButton,
+    selectedAnswer,
+  } = useStepForm(questionsTree, onSubmit);
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        submit();
+      }}
+      className="max-w-xs bg-white rounded shadow px-6 py-4 w-full space-y-4">
+      <p className="text-2xl">{currentQuestion.label}</p>
+      <div className="space-y-2">
+        {currentQuestion.answers.map((answer) => (
+          <div key={answer.label} className="flex gap-2 items-center">
+            <input
+              type="radio"
+              name="answer"
+              value={answer.label}
+              id={answer.label}
+              onChange={() => selectAnswer(answer)}
+              checked={answer.label === selectedAnswer?.label}
+            />
+
+            <label htmlFor={answer.label}>{answer.label}</label>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-between">
+        <button
+          type="button"
+          onClick={back}
+          disabled={shouldDisableBackButton}
+          className="rounded outline-purple-500 text-purple-500 px-3 py-2">
+          Back
+        </button>
+        <button type="submit" className="rounded bg-purple-500 text-white px-3 py-2">
+          Submit
+        </button>
+      </div>
+    </form>
+  );
+}
+
+```
+
+Then, the last thing you have to do is to use this component with a submit handler function, like so
+
+```tsx
+function App() {
+  return (
+    <div className="flex items-center justify-center mx-auto min-h-screen bg-blue-200">
+      <DynamicForm
+        questionsTree={tree}
+        onSubmit={(values) => {
+          fetch('http://localhost?' + new UrlSearchParams(values))
+        }}
+      />
+    </div>
+  );
+}
+```
+
 ## Installation
 
 Just type
