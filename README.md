@@ -101,15 +101,15 @@ As you can read above, the factory functions allow you to avoid repeat yourself 
 
 Just type
 ```sh
-npm install react-dynamic-form
+npm install  @alexandregerault/react-dynamic-form@0.1.0
 ```
 Or if you use yarn
 ```sh
-yarn add react-dynamic-form
+yarn add  @alexandregerault/react-dynamic-form@0.1.0
 ```
 ## Running Tests
 
-To run tests, run the following command
+To run tests, run the following command (you must have cloned the project)
 
 ```bash
   yarn vitest

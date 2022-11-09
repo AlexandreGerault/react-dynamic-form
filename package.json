@@ -1,7 +1,6 @@
 {
-  "name": "react-dynamic-form",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@alexandregerault/react-dynamic-form",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -52,7 +51,9 @@
       "require": "./dist/react-dynamic-form.umd.cjs"
     }
   },
-  "repository": "git@github.com:AlexandreGerault/react-dynamic-form.git",
+  "repository": {
+    "url": "git://github.com/AlexandreGerault/react-dynamic-form.git"
+  },
   "author": "Alexandre Gérault <gerault-alexandre@orange.fr>",
   "license": "MIT"
 }
